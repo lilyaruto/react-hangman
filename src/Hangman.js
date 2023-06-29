@@ -7,6 +7,7 @@ import img3 from "./3.jpg";
 import img4 from "./4.jpg";
 import img5 from "./5.jpg";
 import img6 from "./6.jpg";
+import { randomWord } from "./words.js";
 
 class Hangman extends Component {
   /** by default, allow 6 guesses and use provided gallows images. */
@@ -20,7 +21,7 @@ class Hangman extends Component {
     this.state = {
       nWrong: 0,
       guessed: new Set(),
-      answer: "apple",
+      answer: randomWord(),
       gameOver: false
     };
     this.handleGuess = this.handleGuess.bind(this);
@@ -68,7 +69,7 @@ class Hangman extends Component {
 
   /** render: render game */
   render() {
-    console.log(this);
+    console.log(randomWord().length);
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
