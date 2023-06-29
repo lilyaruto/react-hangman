@@ -21,6 +21,7 @@ class Hangman extends Component {
       nWrong: 0,
       guessed: new Set(),
       answer: "apple",
+      gameOver: false
     };
     this.handleGuess = this.handleGuess.bind(this);
   }
@@ -42,7 +43,8 @@ class Hangman extends Component {
     let ltr = evt.target.value;
     this.setState(st => ({
       guessed: st.guessed.add(ltr),
-      nWrong: st.nWrong + (st.answer.includes(ltr) ? 0 : 1)
+      nWrong: st.nWrong + (st.answer.includes(ltr) ? 0 : 1),
+      gameOver: st.nWrong === this.props.maxWrong ? true : false
     }));
   }
 
@@ -60,15 +62,24 @@ class Hangman extends Component {
     ));
   }
 
+  checkGameOver() {
+    return this.state.nWrong === this.props.maxWrong;
+  }
+
   /** render: render game */
   render() {
+    console.log(this);
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
         <img src={this.props.images[this.state.nWrong]} />
         <p className="wrong-guess_counter">Number wrong: {this.state.nWrong}</p>
         <p className='Hangman-word'>{this.guessedWord()}</p>
-        <p className='Hangman-btns'>{this.generateButtons()}</p>
+        <p className={this.checkGameOver() ? 'lose_scenario-hidden' : "Hangman-btns"}>{this.generateButtons()}</p>
+        <div className={this.checkGameOver() ? "lose_scenario" : "lose_scenario-hidden"}>
+          <p className="">You lose</p>
+          <p className="right_word">The word is: {this.state.answer}</p>
+        </div>
       </div>
     );
   }
