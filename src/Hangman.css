@@ -74,6 +74,16 @@
   box-shadow: 0 6px #9e9e9e;
 }
 
-.lose_scenario-hidden {
+.hidden {
   display: none;
+}
+
+.lose_msg {
+  color: red;
+  font-weight: bold;
+}
+
+.win_msg {
+  color: green;
+  font-weight: bold;
 }

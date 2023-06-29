@@ -64,8 +64,12 @@ class Hangman extends Component {
     ));
   }
 
-  checkGameOver() {
+  checkGameLose() {
     return this.state.nWrong === this.props.maxWrong;
+  }
+
+  checkGameWin() {
+    return !this.guessedWord().toString().includes("_");
   }
 
   restart() {
@@ -85,9 +89,10 @@ class Hangman extends Component {
         <img src={this.props.images[this.state.nWrong]} alt={this.state.nWrong + " wrong guesses"}/>
         <p className="wrong-guess_counter">Number wrong: {this.state.nWrong}</p>
         <p className='Hangman-word'>{this.guessedWord()}</p>
-        <p className={this.checkGameOver() ? 'lose_scenario-hidden' : "Hangman-btns"}>{this.generateButtons()}</p>
-        <div className={this.checkGameOver() ? "lose_scenario" : "lose_scenario-hidden"}>
-          <p className="">You lose</p>
+        <p className={this.checkGameLose() || this.checkGameWin() ? 'hidden' : "Hangman-btns"}>{this.generateButtons()}</p>
+        <p className={this.checkGameWin() ? "win_msg" : "hidden"}>Congratulation!</p>
+        <div className={this.checkGameLose() ? "lose_scenario" : "hidden"}>
+          <p className="lose_msg">You lose</p>
           <p className="right_word">The word is: {this.state.answer}</p>
         </div>
         <button onClick={this.restart} className="restart_button">Restart</button>
